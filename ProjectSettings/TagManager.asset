@@ -18,11 +18,11 @@ TagManager:
   - Monster
   - 
   - 
-  - 
-  - 
+  - Floor
+  - Wall
   - Interactable
-  - 
-  - 
+  - Door
+  - Distraction
   - 
   - 
   - 
