@@ -1,0 +1,11 @@
+TODO:
+- [ ] Area Design
+  - [ ] Inner Room
+  - [ ] North Area
+  - [ ] North-West Area
+  - [ ] North-East Area
+  - [ ] South-West Area
+  - [ ] South-East Area
+- [ ] Horror Effects
+- [ ] 3D Environment
+- [ ] Sound

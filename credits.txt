@@ -1,0 +1,7 @@
+
+
+
+Assets: 
+FirstPerson: https://assetstore.unity.com/packages/3d/characters/modular-first-person-controller-189884
+Interactables: https://assetstore.unity.com/packages/tools/camera/vr-gaze-interaction-system-241337
+Interaction wheel game: https://assetstore.unity.com/packages/templates/systems/interaction-wheel-98545
