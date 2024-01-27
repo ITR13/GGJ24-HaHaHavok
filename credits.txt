@@ -7,3 +7,4 @@ Interactables: https://assetstore.unity.com/packages/tools/camera/vr-gaze-intera
 Interaction wheel game: https://assetstore.unity.com/packages/templates/systems/interaction-wheel-98545
 Modular Office: https://assetstore.unity.com/packages/3d/environments/mini-toon-modular-office-free-demo-201897
 Low Poly WC: https://assetstore.unity.com/packages/3d/props/low-poly-wc-260967
+Fountain: https://assetstore.unity.com/packages/3d/fountain-prop-75912
