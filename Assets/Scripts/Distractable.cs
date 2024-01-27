@@ -13,7 +13,7 @@ namespace DefaultNamespace
             {
                 _interactable.SetActive(!activated);
             }
-            else
+            if(_distractable)
             {
                 _distractable.SetActive(activated);
             }
