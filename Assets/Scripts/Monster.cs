@@ -26,7 +26,7 @@ public class MonsterScript : MonoBehaviour
 
     [SerializeField] private Transform[] _players;
 
-    private State _state;
+    private State _state = State.Walking;
 
     public void FixedUpdate()
     {
@@ -98,7 +98,7 @@ public class MonsterScript : MonoBehaviour
         Debug.Log("Spotted player!");
         _state = State.Distracted;
         _playerBeingChased = playerGo.transform;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         _state = State.Chasing;
     }
 
@@ -116,7 +116,7 @@ public class MonsterScript : MonoBehaviour
 
     private GameObject CheckSightCone(LayerMask layerMask)
     {
-        var hits = Physics.OverlapSphere(transform.position, 10f, layerMask);
+        var hits = Physics.OverlapSphere(transform.position, 4f, layerMask);
 
         foreach (var hit in hits)
         {
@@ -124,7 +124,7 @@ public class MonsterScript : MonoBehaviour
             if (BlockedByWall(hit.transform)) continue;
 
             var hitDirection = hit.transform.position - transform.position;
-            if (WithinSightAngle(hitDirection))
+            if (WithinSightAngle(hitDirection, 110))
             {
                 return hit.gameObject;
             }
@@ -133,7 +133,7 @@ public class MonsterScript : MonoBehaviour
         return null;
     }
 
-    private bool WithinSightAngle(Vector3 direction)
+    private bool WithinSightAngle(Vector3 direction, float deg = 65)
     {
         direction.y = 0f; // Ignore the y component
 
@@ -143,7 +143,7 @@ public class MonsterScript : MonoBehaviour
 
         // Calculate the dot product
         var dotProduct = Vector3.Dot(forwardDirection.normalized, direction.normalized);
-        return dotProduct > 0.819f;
+        return dotProduct > Mathf.Cos(Mathf.Deg2Rad * deg);
     }
 
     private bool BlockedByWall(Transform target)
@@ -161,14 +161,15 @@ public class MonsterScript : MonoBehaviour
         Debug.Log("Got distracted!");
         _state = State.Distracted;
         distractable.SetState(false);
-        _agent.stoppingDistance = 2;
+        _agent.stoppingDistance = 1;
         _agent.speed = _walkingSpeed;
         _agent.destination = distractable.transform.position;
         while (_agent.remainingDistance > _agent.stoppingDistance)
         {
             yield return new WaitForFixedUpdate();
         }
-        yield return new WaitForSeconds(1.5f);
+
+        yield return new WaitForSeconds(3f);
         _state = State.Walking;
         _currentWaypoint = distractable.ClosestWaypoint;
     }
