@@ -26,7 +26,7 @@ public class MonsterScript : MonoBehaviour
 
     [SerializeField] private Transform[] _players;
 
-    private State _state = State.Walking;
+    private State _state = State.Waiting;
 
     public void FixedUpdate()
     {
@@ -95,7 +95,7 @@ public class MonsterScript : MonoBehaviour
     private IEnumerator StartChasingPlayer(GameObject playerGo)
     {
         // TODO: Other laugh sound
-        Debug.Log("Spotted player!");
+        ShowTextOnScreen.ShowText("HA HA HA HA HA HA");
         _state = State.Distracted;
         _playerBeingChased = playerGo.transform;
         yield return new WaitForSeconds(3f);
@@ -158,7 +158,7 @@ public class MonsterScript : MonoBehaviour
     private IEnumerator GetDistracted(Distractable distractable)
     {
         // TODO: Start laughing
-        Debug.Log("Got distracted!");
+        ShowTextOnScreen.ShowText("HA HA HA HA");
         _state = State.Distracted;
         distractable.SetState(false);
         _agent.stoppingDistance = 1;

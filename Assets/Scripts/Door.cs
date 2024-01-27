@@ -19,11 +19,12 @@ public class Door : MonoBehaviour
         {
             if (!FlagManager.Check(_needsKey))
             {
-                Debug.LogError(_onFailOpen);
+                Debug.Log(_onFailOpen);
                 return;
             }
         }
 
+        Debug.Log(_onSucceedOpen);
         _open = true;
         _disableThis.SetActive(false);
     }
