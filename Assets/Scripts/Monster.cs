@@ -26,7 +26,7 @@ public class MonsterScript : MonoBehaviour
 
     [SerializeField] private Transform[] _players;
 
-    private State _state = State.Waiting;
+    private State _state = State.Walking;
 
     public void FixedUpdate()
     {
@@ -67,10 +67,10 @@ public class MonsterScript : MonoBehaviour
         var distFromWaypoint = Vector3.SqrMagnitude(distVector);
         if (distFromWaypoint > 0.75f * 0.75f) return;
         Debug.Log("Hit waypoint!");
-        _prevWaypoint = _currentWaypoint;
 
         if (_currentWaypoint.Neighbors.Length == 1)
         {
+            _prevWaypoint = _currentWaypoint;
             _currentWaypoint = _currentWaypoint.Neighbors[0];
             return;
         }
@@ -78,17 +78,20 @@ public class MonsterScript : MonoBehaviour
         var remainingWaypoints = _currentWaypoint.Neighbors.Where(w => w != _prevWaypoint).ToArray();
         if (remainingWaypoints.Length == 1)
         {
+            _prevWaypoint = _currentWaypoint;
             _currentWaypoint = remainingWaypoints[0];
             return;
         }
 
         if (!_playerBeingChased)
         {
+            _prevWaypoint = _currentWaypoint;
             var r = Random.Range(0, remainingWaypoints.Length);
             _currentWaypoint = remainingWaypoints[r];
         }
 
         var closestWaypoint = remainingWaypoints.OrderBy(w => Vector3.SqrMagnitude(w.transform.position - _playerBeingChased.position)).First();
+        _prevWaypoint = _currentWaypoint;
         _currentWaypoint = closestWaypoint;
     }
 
@@ -158,9 +161,9 @@ public class MonsterScript : MonoBehaviour
     private IEnumerator GetDistracted(Distractable distractable)
     {
         // TODO: Start laughing
-        ShowTextOnScreen.ShowText("HA HA HA HA");
         _state = State.Distracted;
         distractable.SetState(false);
+        yield return new WaitForFixedUpdate();
         _agent.stoppingDistance = 1;
         _agent.speed = _walkingSpeed;
         _agent.destination = distractable.transform.position;
@@ -168,6 +171,7 @@ public class MonsterScript : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
         }
+        ShowTextOnScreen.ShowText("HA HA HA HA");
 
         yield return new WaitForSeconds(3f);
         _state = State.Walking;
