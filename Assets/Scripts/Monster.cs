@@ -171,11 +171,31 @@ public class MonsterScript : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
         }
+
         ShowTextOnScreen.ShowText("HA HA HA HA");
 
         yield return new WaitForSeconds(3f);
         _state = State.Walking;
-        _currentWaypoint = distractable.ClosestWaypoint;
+        _currentWaypoint = distractable.ClosestWaypoint != null ? distractable.ClosestWaypoint : FindClosestWaypoint();
+    }
+
+    private Waypoint FindClosestWaypoint()
+    {
+        var points = FindObjectsOfType<Waypoint>();
+        Waypoint closest = null;
+        var distance = float.MaxValue;
+        var pos = transform.position;
+        foreach (var point in points)
+        {
+            var dist = Vector3.SqrMagnitude(point.transform.position - pos);
+            if (dist < distance)
+            {
+                distance = dist;
+                closest = point;
+            }
+        }
+
+        return closest;
     }
 
     private void MoveTowards(Transform target, float speed)

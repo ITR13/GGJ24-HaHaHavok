@@ -9,8 +9,14 @@ namespace DefaultNamespace
 
         public void SetState(bool activated)
         {
-            _interactable.SetActive(!activated);
-            _distractable.SetActive(activated);
+            if (_interactable)
+            {
+                _interactable.SetActive(!activated);
+            }
+            else
+            {
+                _distractable.SetActive(activated);
+            }
         }
     }
 }
