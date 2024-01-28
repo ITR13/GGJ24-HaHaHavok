@@ -29,8 +29,12 @@ public class MonsterScript : MonoBehaviour
 
     [SerializeField] private AudioSource _deathSound;
     [SerializeField] private MonoBehaviour _disableOnDeath;
+    [SerializeField] private Waypoint _movableWaypoint;
 
+    private Vector3 _lastPosition;
     private State _state = State.Waiting;
+
+    private float timeStill = 0f;
 
     public void FixedUpdate()
     {
@@ -53,6 +57,7 @@ public class MonsterScript : MonoBehaviour
                 break;
             case State.Walking:
                 MoveTowards(_currentWaypoint.transform, _walkingSpeed);
+                CheckWaypoint();
                 goto case State.Waiting;
             case State.Waiting:
                 var playerGo = CheckPlayerInSight();
@@ -61,8 +66,6 @@ public class MonsterScript : MonoBehaviour
                 StartCoroutine(StartChasingPlayer(playerGo));
                 break;
         }
-
-        CheckWaypoint();
 
         var distractableGo = CheckSightCone(_distractionMask);
         if (distractableGo == null) return;
@@ -74,37 +77,35 @@ public class MonsterScript : MonoBehaviour
 
     private void CheckWaypoint()
     {
-        var distVector = transform.position - _currentWaypoint.transform.position;
-        distVector.y = 0;
-        var distFromWaypoint = Vector3.SqrMagnitude(distVector);
-        if (distFromWaypoint > 0.75f * 0.75f) return;
-        Debug.Log("Hit waypoint!");
-
-        if (_currentWaypoint.Neighbors.Length == 1)
+        if (Vector3.SqrMagnitude(_lastPosition - transform.position) < 0.1f * Time.deltaTime)
         {
-            _prevWaypoint = _currentWaypoint;
-            _currentWaypoint = _currentWaypoint.Neighbors[0];
+            timeStill += Time.deltaTime;
+        }
+        else
+        {
+            timeStill = 0;
+        }
+
+        _lastPosition = transform.position;
+
+        if (timeStill < 2.5f)
+        {
             return;
         }
 
-        var remainingWaypoints = _currentWaypoint.Neighbors.Where(w => w != _prevWaypoint).ToArray();
-        if (remainingWaypoints.Length == 1)
+        timeStill = 0;
+        Debug.Log("Switched waypoint");
+
+        if (Random.Range(0, 3) == 0)
         {
-            _prevWaypoint = _currentWaypoint;
-            _currentWaypoint = remainingWaypoints[0];
+            _movableWaypoint.transform.position = _playerBeingChased.transform.position;
+            _currentWaypoint = _movableWaypoint;
             return;
         }
 
-        if (!_playerBeingChased)
-        {
-            _prevWaypoint = _currentWaypoint;
-            var r = Random.Range(0, remainingWaypoints.Length);
-            _currentWaypoint = remainingWaypoints[r];
-        }
-
-        var closestWaypoint = remainingWaypoints.OrderBy(w => Vector3.SqrMagnitude(w.transform.position - _playerBeingChased.position)).First();
-        _prevWaypoint = _currentWaypoint;
-        _currentWaypoint = closestWaypoint;
+        var allWaypoints = FindObjectsOfType<Waypoint>();
+        var r = Random.Range(0, allWaypoints.Length);
+        _currentWaypoint = allWaypoints[r];
     }
 
     private IEnumerator StartChasingPlayer(GameObject playerGo)
@@ -131,7 +132,7 @@ public class MonsterScript : MonoBehaviour
 
     private GameObject CheckSightCone(LayerMask layerMask)
     {
-        var hits = Physics.OverlapSphere(transform.position, 4f, layerMask);
+        var hits = Physics.OverlapSphere(transform.position, 8f, layerMask);
 
         foreach (var hit in hits)
         {
