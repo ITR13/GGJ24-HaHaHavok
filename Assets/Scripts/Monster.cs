@@ -3,6 +3,7 @@ using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class MonsterScript : MonoBehaviour
@@ -26,7 +27,10 @@ public class MonsterScript : MonoBehaviour
 
     [SerializeField] private Transform[] _players;
 
-    private State _state = State.Walking;
+    [SerializeField] private AudioSource _deathSound;
+    [SerializeField] private MonoBehaviour _disableOnDeath;
+
+    private State _state = State.Waiting;
 
     public void FixedUpdate()
     {
@@ -38,6 +42,14 @@ public class MonsterScript : MonoBehaviour
                 var seesPlayer = true; // !BlockedByWall(_playerBeingChased);
                 var target = seesPlayer ? _playerBeingChased : _currentWaypoint.transform;
                 MoveTowards(target, _chasingSpeed);
+
+                var dist = Vector3.SqrMagnitude(_playerBeingChased.transform.position - transform.position);
+                if (dist <= 5)
+                {
+                    StartCoroutine(Die());
+                    return;
+                }
+
                 break;
             case State.Walking:
                 MoveTowards(_currentWaypoint.transform, _walkingSpeed);
@@ -204,5 +216,15 @@ public class MonsterScript : MonoBehaviour
         _agent.speed = speed;
         _agent.stoppingDistance = 0;
         if (_agent.destination != targetPos) _agent.destination = targetPos;
+    }
+
+    private IEnumerator Die()
+    {
+        _state = State.Distracted;
+        ShowTextOnScreen.ShowText("*player dying sounds*");
+        _deathSound.Play();
+        _disableOnDeath.enabled = false;
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(0);
     }
 }
