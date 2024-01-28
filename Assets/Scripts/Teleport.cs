@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Teleport : MonoBehaviour
 {
@@ -9,6 +7,12 @@ public class Teleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_toPosition == null)
+        {
+            SceneManager.LoadScene(1);
+            return;
+        }
+
         other.transform.position = _toPosition.position;
     }
 }

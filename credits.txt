@@ -1,8 +1,100 @@
-Credits:
+# Credits:
+## Project Management
+Project Manager: ITR
+
+## Coding:
 FlagStorage script: Maksym Holiak
+Everything else: ITR
 
+## Art
+Magical Girl Art: Joiski
+Male Genitalia: Carl
+Waffle Layout & Waffle Heart: Persijn
+Waffle Heart: Birger
+Waffle Heart: Ares
+Waffle Heart: AdrianCV
+Waffle Heart : Kaey
+You win screen: Larsmolov
 
-Assets: 
+## Audio
+Death sound: Espeseth
+
+## Game Design:
+Picture with clown nose: Jenny Hulla
+Confetti: Thea Sofie
+Jack in the Box: Icebell
+Kontorbygning-ish: Toffe
+Throw away a baby: Andreas Asker
+Rake: NorseWolfDev
+Arcade Machine: Kaja Arielle
+Mask: Marie Estrand
+Macro Level Design: Even Fosser
+Teleporter: Håkon Bratlien
+Game or Monster name: Mikael Svartdahl
+Whoopie Cushion: Steinar
+Fart: OmgKetchup
+Gamedev Clips: Ullik
+Male Genitalia: Oliver Chateau
+Tv screen: Jaime Løve Hansen
+Wilson: Jonas
+2010 Meme: Simen 22 år
+Joe Biden: Vetle
+Banana Peel: BluAlpha
+Dim Lights: David
+
+## Map Design:
+Maze: Anders LH
+Garden: Anders F
+Exit: Nazeefa
+Pool Room: Terje
+Ball Pit: Remy
+Living Room: Tommas
+Outer Shape: Marie
+Couch hallway: Benedikte
+Sen's Cafeteria: Fredrik
+Far away door room: Håvard S. Glad
+Freeer Room: Kristina Åkeman
+Remy: Ball Pit
+Teleporter: Håkon Bratlien
+
+## Mysterious Picture
+Aether: Kenvu1232nd
+Wanderer: emir.c0s
+Miku: aura.cosplay.photo 
+Rin: rinm_08131
+Len: valexiio.cos 
+Zelda: tatsucos
+Tsunade: hidahoe.cos
+Nanami: cosplaysbyfu 
+MumboJumbo: cos_playing_bee
+Maddie: sammycoz
+Madoka: amist1507
+Kobeni: c0nnieez 
+kiki_things0
+Nahida: _anine.cos_
+Altheitam: darkc0splays
+Kave: jb.cos
+Ganyu: nyacoz
+Hu Tao: leckun
+Tighnari: theeeejoyfish 
+Byakuya: mikesps4controller
+Venti, Venti & Hu Tao: Bibliocon Crew
+Cat drawing: Bizziton Crafts
+Loyd: hk_cosplay
+Dazai: beloved.cosplays
+Lumine: rizzler.cos
+Aether: nyx.nuz
+Husk: devilish.c0s
+Rui Kamishiro: rui.cos.sometimes
+Itto: charcoal_cow
+Leney: vanilla_gorou
+Don Quixote: hamhamwarrior99
+Ymir: in_bacon_cosplays
+Wendy: asterisk._.cosplay
+Lumine: losingarts
+Plagg: fenrissnow
+
+## Assets: 
 FirstPerson: https://assetstore.unity.com/packages/3d/characters/modular-first-person-controller-189884
 Interactables: https://assetstore.unity.com/packages/tools/camera/vr-gaze-interaction-system-241337
 Interaction wheel game: https://assetstore.unity.com/packages/templates/systems/interaction-wheel-98545
